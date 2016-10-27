@@ -1,10 +1,11 @@
-require 'pry'
 class Game
-  attr_reader :random_number
+  attr_reader :random_number,
+              :guess_count
 
   def initialize
     @guess_count = 0
   end
+
   def start_game
     @random_number = rand(101)
     "Good luck!"

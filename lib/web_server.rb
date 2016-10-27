@@ -1,6 +1,7 @@
 require 'socket'
-require 'pry'
 require './lib/router'
+require './lib/diagnostics'
+
 class WebServer
   attr_reader   :client
   attr_accessor :kill_session
@@ -22,6 +23,7 @@ class WebServer
         request_lines << line.chomp
       end
       client.puts @router.route_request(request_lines, self)
+      client.puts Diagnostics.new.parse_request_lines(request_lines)
       request_lines = []
       client.close
       break if kill_session == true

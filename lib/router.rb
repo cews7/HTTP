@@ -4,7 +4,7 @@ require './lib/date_time'
 require './lib/shutdown'
 require './lib/word_search'
 require './lib/game'
-require 'pry'
+
 class Router
   attr_reader :counter
   def initialize
@@ -19,9 +19,7 @@ class Router
 
   def route_request(request_lines, server)
     @counter += 1
-    if check_path(request_lines).eql?("Path: /")
-      @diagnostics.parse_request_lines(request_lines)
-    elsif check_path(request_lines).eql?("Path: /hello")
+    if check_path(request_lines).eql?("Path: /hello")
       @hello_world.hello_response
     elsif check_path(request_lines).eql?("Path: /datetime")
       @date_time.date_time_response
