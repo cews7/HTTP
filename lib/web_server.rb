@@ -2,9 +2,11 @@ require 'socket'
 require 'pry'
 require './lib/router'
 class WebServer
-  attr_reader :client
+  attr_reader   :client
+  attr_accessor :kill_session
   def initialize
-    @router = Router.new
+    @router       = Router.new
+    @kill_session = false
   end
 
   def start_web_server
@@ -19,9 +21,10 @@ class WebServer
       while line = client.gets and !line.chomp.empty?
         request_lines << line.chomp
       end
-      client.puts @router.route_request(request_lines)
+      client.puts @router.route_request(request_lines, self)
       request_lines = []
       client.close
+      break if kill_session == true
     end
   end
 end
